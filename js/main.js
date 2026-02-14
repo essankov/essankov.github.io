@@ -20,7 +20,7 @@ function applyTheme(theme) {
   if (label) label.textContent = theme === 'dark' ? 'Light' : 'Dark';
 }
 
-// Update button UI to match theme already set by theme-init.js
+// Update button UI to match theme already set by inline script
 applyTheme(getPreferredTheme());
 
 var themeBtn = document.getElementById('theme-toggle');
