@@ -77,7 +77,6 @@ body {
   line-height: 1.75;
   display: flex;
   min-height: 100vh;
-  transition: background-color 0.3s, color 0.3s;
 }
 
 a {
@@ -165,7 +164,6 @@ a:hover {
   flex-direction: column;
   padding: 2.5rem 1.8rem;
   z-index: 100;
-  transition: background-color 0.3s, border-color 0.3s;
 }
 
 .sidebar-logo {
@@ -226,22 +224,6 @@ a:hover {
   border-top: 1px solid var(--border);
 }
 
-.sidebar-social {
-  display: flex;
-  gap: 1rem;
-}
-
-.sidebar-social a {
-  font-family: var(--font-sans);
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-  border-bottom: none;
-}
-
-.sidebar-social a:hover {
-  color: var(--text);
-}
-
 /* ========================================
    Theme Toggle
    ======================================== */
@@ -290,7 +272,6 @@ a:hover {
   font-size: 1.2rem;
   line-height: 1;
   color: var(--text);
-  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
 }
 
 .sidebar-overlay {
