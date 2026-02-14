@@ -1,7 +1,6 @@
 ---
 title: On Building Things
 date: February 14, 2026
-tags: building, code
 ---
 
 There's something deeply satisfying about building things from scratch. Whether it's a piece of software, a website, or even a simple script that automates a tedious task — the act of creation is rewarding in itself.

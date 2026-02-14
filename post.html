@@ -46,7 +46,6 @@
           <span id="post-date"></span>
           <span class="reading-time" id="reading-time" style="display:none"></span>
         </div>
-        <div class="tags" id="post-tags" style="display:none"></div>
       </header>
 
       <noscript>
@@ -101,7 +100,6 @@
           var title = slug;
           var date = '';
           var body = text;
-          var tags = [];
 
           var match = text.match(/^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/);
           if (match) {
@@ -120,10 +118,6 @@
             if (dirVal) document.documentElement.setAttribute('dir', dirVal[1].trim());
             if (langVal) document.documentElement.setAttribute('lang', langVal[1].trim());
 
-            var tagsVal = fm.match(/^tags:\s*(.+)$/m);
-            if (tagsVal) {
-              tags = tagsVal[1].split(',').map(function (s) { return s.trim(); }).filter(Boolean);
-            }
           }
 
           // Calculate reading time
@@ -149,19 +143,6 @@
               rtEl.textContent = readingMin + ' min read';
             }
             rtEl.style.display = '';
-
-            // Tags
-            if (tags.length) {
-              var tagsEl = document.getElementById('post-tags');
-              tagsEl.innerHTML = '';
-              tags.forEach(function (tag) {
-                var span = document.createElement('span');
-                span.className = 'tag';
-                span.textContent = tag;
-                tagsEl.appendChild(span);
-              });
-              tagsEl.style.display = '';
-            }
 
             // Sanitize and render markdown
             var rawHtml = marked.parse(body);

@@ -4,7 +4,6 @@
     "title": "\u0642\u0648\u0629 \u0627\u0644\u0648\u064a\u0628 \u0627\u0644\u0639\u0631\u0628\u064a",
     "date": "2026-02-14",
     "dateDisplay": "Feb 14, 2026",
-    "tags": ["arabic", "web", "technology"],
     "dir": "rtl",
     "lang": "ar"
   },
@@ -12,28 +11,24 @@
     "slug": "on-building-things",
     "title": "On Building Things",
     "date": "2026-02-14",
-    "dateDisplay": "Feb 14, 2026",
-    "tags": ["building", "code"]
+    "dateDisplay": "Feb 14, 2026"
   },
   {
     "slug": "the-beauty-of-simplicity",
     "title": "The Beauty of Simplicity",
     "date": "2026-02-10",
-    "dateDisplay": "Feb 10, 2026",
-    "tags": ["design", "simplicity"]
+    "dateDisplay": "Feb 10, 2026"
   },
   {
     "slug": "starting-fresh",
     "title": "Starting Fresh",
     "date": "2026-01-20",
-    "dateDisplay": "Jan 20, 2026",
-    "tags": ["blogging", "reflection"]
+    "dateDisplay": "Jan 20, 2026"
   },
   {
     "slug": "why-i-write",
     "title": "Why I Write",
     "date": "2026-01-05",
-    "dateDisplay": "Jan 5, 2026",
-    "tags": ["writing", "reflection"]
+    "dateDisplay": "Jan 5, 2026"
   }
 ]

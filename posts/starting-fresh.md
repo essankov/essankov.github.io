@@ -1,7 +1,6 @@
 ---
 title: Starting Fresh
 date: January 20, 2026
-tags: blogging, reflection
 ---
 
 There's something liberating about a blank page. No baggage, no legacy decisions, no "we've always done it this way." Just possibility.

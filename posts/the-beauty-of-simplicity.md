@@ -1,7 +1,6 @@
 ---
 title: The Beauty of Simplicity
 date: February 10, 2026
-tags: design, simplicity
 ---
 
 We live in a world that constantly pushes us toward complexity. More features, more options, more everything. But there's a quiet elegance in choosing less — in stripping away the unnecessary until only the essential remains.
