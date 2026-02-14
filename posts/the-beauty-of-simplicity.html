@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Beauty of Simplicity — Essa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;450;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <button class="mobile-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">&#9776;</button>
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html">Essa</a>
+      <span class="subtitle">Thoughts & Ideas</span>
+    </div>
+    <ul class="sidebar-nav">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../blog.html">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+    </ul>
+    <div class="sidebar-social">
+      <a href="https://github.com/essankov" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://twitter.com/" target="_blank" rel="noopener">Twitter</a>
+    </div>
+  </nav>
+
+  <main class="main">
+    <div class="content">
+
+      <a href="../blog.html" class="back-link">All posts</a>
+
+      <header class="post-header">
+        <h1>The Beauty of Simplicity</h1>
+        <div class="post-meta">February 10, 2026</div>
+      </header>
+
+      <article class="post-content">
+        <p>We live in a world that constantly pushes us toward complexity. More features, more options, more everything. But there's a quiet elegance in choosing less — in stripping away the unnecessary until only the essential remains.</p>
+
+        <p>Design, at its best, is invisible. You don't notice it because it doesn't get in the way. It simply works. The best tools, the best interfaces, the best writing — they all share this quality of effortless clarity.</p>
+
+        <h2>Less, but Better</h2>
+
+        <p>Dieter Rams said it best: "Less, but better." This isn't about minimalism for its own sake. It's about intentionality. Every element should earn its place.</p>
+
+        <p>Think about the websites you enjoy visiting. Chances are, they're the ones that load fast, present information clearly, and don't assault you with popups, notifications, and visual clutter.</p>
+
+        <h2>Simplicity in Code</h2>
+
+        <p>The same principle applies to code. The best code is the code you don't write. Every line is a potential bug, a maintenance burden, a source of complexity. Write what you need, nothing more.</p>
+
+        <blockquote>
+          <p>Perfection is achieved, not when there is nothing more to add, but when there is nothing left to take away.</p>
+        </blockquote>
+
+        <p>Antoine de Saint-Exupery wrote that about airplanes, but it applies beautifully to software, to design, and to life in general.</p>
+
+        <hr>
+
+        <p>The next time you're tempted to add just one more thing, pause and ask: does this serve the purpose? If not, leave it out. The result will be better for it.</p>
+      </article>
+
+      <footer class="footer">
+        <p>&copy; 2026 Essa. All rights reserved.</p>
+      </footer>
+
+    </div>
+  </main>
+
+  <script>
+    const toggle = document.getElementById('mobile-menu-toggle');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    toggle.addEventListener('click', () => { sidebar.classList.toggle('open'); overlay.classList.toggle('open'); document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : ''; });
+    overlay.addEventListener('click', () => { sidebar.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow = ''; });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { sidebar.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow = ''; } });
+  </script>
+
+</body>
+</html>

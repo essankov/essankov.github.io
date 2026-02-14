@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why I Write — Essa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;450;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <button class="mobile-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">&#9776;</button>
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html">Essa</a>
+      <span class="subtitle">Thoughts & Ideas</span>
+    </div>
+    <ul class="sidebar-nav">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../blog.html">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+    </ul>
+    <div class="sidebar-social">
+      <a href="https://github.com/essankov" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://twitter.com/" target="_blank" rel="noopener">Twitter</a>
+    </div>
+  </nav>
+
+  <main class="main">
+    <div class="content">
+
+      <a href="../blog.html" class="back-link">All posts</a>
+
+      <header class="post-header">
+        <h1>Why I Write</h1>
+        <div class="post-meta">January 5, 2026</div>
+      </header>
+
+      <article class="post-content">
+        <p>Writing is thinking made visible. When you write, you're forced to organize your thoughts, to find the thread that connects one idea to the next, to make sense of the noise in your head.</p>
+
+        <p>I don't write because I have all the answers. I write because the act of writing helps me find them — or at least get closer to understanding the questions.</p>
+
+        <h2>Writing as Learning</h2>
+
+        <p>There's a concept called "learning in public" — sharing what you're learning as you learn it. It's vulnerable, because you might be wrong. But it's powerful, because it creates a feedback loop. You learn, you write, others respond, and you learn more.</p>
+
+        <p>Every blog post is a snapshot of understanding. It won't always be right. It won't always age well. But it's honest, and that's what matters.</p>
+
+        <h2>Writing as Connection</h2>
+
+        <p>The internet can feel isolating, but writing bridges that gap. When you put your thoughts out there, you find people who think similarly — or differently in interesting ways. Those connections are worth more than any metric.</p>
+
+        <blockquote>
+          <p>Writing is the painting of the voice.</p>
+        </blockquote>
+
+        <p>So here I am, painting my voice. Imperfectly, incompletely, but authentically. That's enough.</p>
+      </article>
+
+      <footer class="footer">
+        <p>&copy; 2026 Essa. All rights reserved.</p>
+      </footer>
+
+    </div>
+  </main>
+
+  <script>
+    const toggle = document.getElementById('mobile-menu-toggle');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    toggle.addEventListener('click', () => { sidebar.classList.toggle('open'); overlay.classList.toggle('open'); document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : ''; });
+    overlay.addEventListener('click', () => { sidebar.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow = ''; });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { sidebar.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow = ''; } });
+  </script>
+
+</body>
+</html>

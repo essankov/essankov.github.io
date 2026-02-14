@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Essa — Blog</title>
+  <title>Blog — Essa</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;450;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
@@ -11,19 +11,17 @@
 </head>
 <body>
 
-  <!-- Mobile Menu Toggle -->
   <button class="mobile-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">&#9776;</button>
   <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
-  <!-- Sidebar Navigation -->
   <nav class="sidebar" id="sidebar">
     <div class="sidebar-logo">
       <a href="index.html">Essa</a>
       <span class="subtitle">Thoughts & Ideas</span>
     </div>
     <ul class="sidebar-nav">
-      <li><a href="index.html" class="active">Home</a></li>
-      <li><a href="blog.html">Blog</a></li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="blog.html" class="active">Blog</a></li>
       <li><a href="about.html">About</a></li>
     </ul>
     <div class="sidebar-social">
@@ -32,20 +30,15 @@
     </div>
   </nav>
 
-  <!-- Main Content -->
   <main class="main">
     <div class="content">
 
-      <!-- Intro -->
       <section class="intro">
-        <h1>Hello, World!</h1>
-        <p>Welcome to my corner of the internet. I write about things that catch my attention — technology, ideas, and everything in between. I believe writing is a way to capture wonder and make sense of the world around us.</p>
+        <h1>Blog</h1>
+        <p>All posts, organized by date.</p>
       </section>
 
-      <!-- Recent Posts -->
       <section>
-        <h2 class="section-header">Recent Posts</h2>
-
         <div class="post-group">
           <div class="post-group-label">February 2026</div>
           <ul class="post-list">
@@ -73,7 +66,6 @@
             </li>
           </ul>
         </div>
-
       </section>
 
       <footer class="footer">
@@ -87,26 +79,9 @@
     const toggle = document.getElementById('mobile-menu-toggle');
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebar-overlay');
-
-    toggle.addEventListener('click', () => {
-      sidebar.classList.toggle('open');
-      overlay.classList.toggle('open');
-      document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
-    });
-
-    overlay.addEventListener('click', () => {
-      sidebar.classList.remove('open');
-      overlay.classList.remove('open');
-      document.body.style.overflow = '';
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        sidebar.classList.remove('open');
-        overlay.classList.remove('open');
-        document.body.style.overflow = '';
-      }
-    });
+    toggle.addEventListener('click', () => { sidebar.classList.toggle('open'); overlay.classList.toggle('open'); document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : ''; });
+    overlay.addEventListener('click', () => { sidebar.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow = ''; });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { sidebar.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow = ''; } });
   </script>
 
 </body>
