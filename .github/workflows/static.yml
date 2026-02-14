@@ -26,6 +26,16 @@ jobs:
         uses: actions/checkout@v4
       - name: Generate blog post list and feed.xml
         run: python3 generate_posts.py
+      - name: Minify CSS and JavaScript
+        run: |
+          pip install csscompressor rjsmin
+          python3 -c "
+          import pathlib, csscompressor, rjsmin
+          for f in pathlib.Path('css').glob('*.css'):
+              f.write_text(csscompressor.compress(f.read_text()))
+          for f in pathlib.Path('js').glob('*.js'):
+              f.write_text(rjsmin.jsmin(f.read_text()))
+          "
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
