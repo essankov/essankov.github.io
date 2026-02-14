@@ -7,14 +7,9 @@
    ======================================== */
 
 /* Jali Arabic */
-@font-face { font-family: 'Jali Arabic'; src: url('../fonts/Jali-Arabic-Extralight.woff2') format('woff2'); font-weight: 200; font-display: swap; }
-@font-face { font-family: 'Jali Arabic'; src: url('../fonts/Jali-Arabic-Light.woff2') format('woff2'); font-weight: 300; font-display: swap; }
 @font-face { font-family: 'Jali Arabic'; src: url('../fonts/Jali-Arabic-Regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
-@font-face { font-family: 'Jali Arabic'; src: url('../fonts/Jali-Arabic-Medium.woff2') format('woff2'); font-weight: 500; font-display: swap; }
 @font-face { font-family: 'Jali Arabic'; src: url('../fonts/Jali-Arabic-SemiBold.woff2') format('woff2'); font-weight: 600; font-display: swap; }
 @font-face { font-family: 'Jali Arabic'; src: url('../fonts/Jali-Arabic-Bold.woff2') format('woff2'); font-weight: 700; font-display: swap; }
-@font-face { font-family: 'Jali Arabic'; src: url('../fonts/Jali-Arabic-Extrabold.woff2') format('woff2'); font-weight: 800; font-display: swap; }
-@font-face { font-family: 'Jali Arabic'; src: url('../fonts/Jali-Arabic-Black.woff2') format('woff2'); font-weight: 900; font-display: swap; }
 
 /* Inter (variable, 300–700) */
 @font-face {
@@ -488,17 +483,6 @@ a:hover {
   border-top: 1px solid var(--border);
   font-family: var(--font-sans);
   font-size: 0.78rem;
-  color: var(--text-secondary);
-}
-
-/* ========================================
-   Noscript
-   ======================================== */
-
-.noscript-msg {
-  font-family: var(--font-sans);
-  text-align: center;
-  padding: 2rem;
   color: var(--text-secondary);
 }
 

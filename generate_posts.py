@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
-"""Generate posts.json and feed.xml from existing post HTML files."""
-import json, os, re, html
+"""Generate blog.html post list and feed.xml from existing post HTML files."""
+import os, re, html
 from datetime import datetime, timezone
 
 SITE_URL = 'https://essankov.github.io'
 POSTS_DIR = os.path.join(os.path.dirname(__file__), 'posts')
-OUTPUT_JSON = os.path.join(os.path.dirname(__file__), 'posts.json')
+BLOG_HTML = os.path.join(os.path.dirname(__file__), 'blog.html')
 OUTPUT_RSS = os.path.join(os.path.dirname(__file__), 'feed.xml')
+
+MONTHS = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December',
+]
 
 
 def extract_metadata(filepath):
@@ -36,6 +41,55 @@ def extract_metadata(filepath):
         meta['description'] = html.unescape(m.group(1))
 
     return meta
+
+
+def build_post_list_html(posts):
+    """Build grouped HTML matching the structure blog.js used to produce."""
+    groups = []
+    group_map = {}
+
+    for p in posts:
+        dt = datetime.strptime(p['date'], '%Y-%m-%d')
+        key = f'{dt.year}-{dt.month:02d}'
+        label = f'{MONTHS[dt.month - 1]} {dt.year}'
+        if key not in group_map:
+            group = {'label': label, 'posts': []}
+            group_map[key] = group
+            groups.append(group)
+        group_map[key]['posts'].append(p)
+
+    lines = []
+    for g in groups:
+        lines.append('      <div class="post-group">')
+        lines.append(f'        <div class="post-group-label">{html.escape(g["label"])}</div>')
+        lines.append('        <ul class="post-list">')
+        for p in g['posts']:
+            slug_escaped = html.escape(p['slug'])
+            title_escaped = html.escape(p['title'])
+            date_escaped = html.escape(p['dateDisplay'])
+            lines.append(f'          <li class="post-item">')
+            lines.append(f'            <a href="posts/{slug_escaped}.html">{title_escaped}</a>')
+            lines.append(f'            <span class="post-date">{date_escaped}</span>')
+            lines.append(f'          </li>')
+        lines.append('        </ul>')
+        lines.append('      </div>')
+
+    return '\n'.join(lines)
+
+
+def inject_into_blog(posts_html):
+    with open(BLOG_HTML, encoding='utf-8') as f:
+        content = f.read()
+
+    content = re.sub(
+        r'<section id="posts-section">.*?</section>',
+        f'<section id="posts-section">\n{posts_html}\n      </section>',
+        content,
+        flags=re.DOTALL,
+    )
+
+    with open(BLOG_HTML, 'w', encoding='utf-8') as f:
+        f.write(content)
 
 
 def generate_rss(posts):
@@ -104,15 +158,10 @@ def main():
 
     posts.sort(key=lambda p: p['date'], reverse=True)
 
-    # Write posts.json (without description — only used for RSS)
-    posts_json = []
-    for p in posts:
-        posts_json.append({k: v for k, v in p.items() if k != 'description'})
-
-    with open(OUTPUT_JSON, 'w', encoding='utf-8') as f:
-        json.dump(posts_json, f, indent=2, ensure_ascii=False)
-        f.write('\n')
-    print(f'  posts.json ({len(posts_json)} posts)')
+    # Inject pre-rendered post list into blog.html
+    posts_html = build_post_list_html(posts)
+    inject_into_blog(posts_html)
+    print(f'  blog.html ({len(posts)} posts)')
 
     # Write feed.xml
     rss = generate_rss(posts)

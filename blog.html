@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
   <meta name="referrer" content="no-referrer-when-downgrade">
   <title>Blog — Essa</title>
   <meta name="description" content="All posts by Essa, organized by date. Thoughts on technology, building things, and simplicity.">
@@ -16,6 +16,8 @@
   <meta name="twitter:description" content="All posts by Essa, organized by date.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="alternate" type="application/rss+xml" title="Essa" href="feed.xml">
+  <link rel="preload" href="fonts/Inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/SourceSerif4-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/style.css">
   <script src="js/main.js"></script>
 </head>
@@ -43,13 +45,42 @@
         <p>All posts, organized by date.</p>
       </section>
 
-      <noscript>
-        <div class="noscript-msg">
-          <p>JavaScript is required to load the post list.</p>
-        </div>
-      </noscript>
-
-      <section id="posts-section"></section>
+      <section id="posts-section">
+      <div class="post-group">
+        <div class="post-group-label">February 2026</div>
+        <ul class="post-list">
+          <li class="post-item">
+            <a href="posts/power-of-arabic-web.html">قوة الويب العربي</a>
+            <span class="post-date">Feb 14, 2026</span>
+          </li>
+          <li class="post-item">
+            <a href="posts/on-building-things.html">On Building Things</a>
+            <span class="post-date">Feb 14, 2026</span>
+          </li>
+          <li class="post-item">
+            <a href="posts/note-to-self.html">مما أعجبني</a>
+            <span class="post-date">Feb 14, 2026</span>
+          </li>
+          <li class="post-item">
+            <a href="posts/the-beauty-of-simplicity.html">The Beauty of Simplicity</a>
+            <span class="post-date">Feb 10, 2026</span>
+          </li>
+        </ul>
+      </div>
+      <div class="post-group">
+        <div class="post-group-label">January 2026</div>
+        <ul class="post-list">
+          <li class="post-item">
+            <a href="posts/starting-fresh.html">Starting Fresh</a>
+            <span class="post-date">Jan 20, 2026</span>
+          </li>
+          <li class="post-item">
+            <a href="posts/why-i-write.html">Why I Write</a>
+            <span class="post-date">Jan 5, 2026</span>
+          </li>
+        </ul>
+      </div>
+      </section>
 
       <footer class="footer">
         <p>&copy; 2026 Essa. All rights reserved.</p>
@@ -58,7 +89,6 @@
     </div>
   </main>
 
-  <script src="js/blog.js"></script>
 
 </body>
 </html>
