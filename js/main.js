@@ -1,14 +1,22 @@
-// Theme: apply immediately on <html> to prevent flash
-(function () {
-  var saved = localStorage.getItem('theme');
-  var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-  document.documentElement.setAttribute('data-theme', theme);
-})();
+// Safe localStorage wrapper (Brave Shields can block storage access)
+function getStorage(key) {
+  try { return localStorage.getItem(key); } catch (e) { return null; }
+}
+function setStorage(key, val) {
+  try { localStorage.setItem(key, val); } catch (e) {}
+}
 
-// Set up controls after DOM is ready
+function getPreferredTheme() {
+  return getStorage('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+}
+
+// Apply theme immediately to prevent flash
+document.documentElement.setAttribute('data-theme', getPreferredTheme());
+
 document.addEventListener('DOMContentLoaded', function () {
   function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.style.colorScheme = theme;
     var btn = document.getElementById('theme-toggle');
     if (!btn) return;
     var icon = btn.querySelector('.icon');
@@ -17,25 +25,20 @@ document.addEventListener('DOMContentLoaded', function () {
     if (label) label.textContent = theme === 'dark' ? 'Light' : 'Dark';
   }
 
-  // Apply current theme to update button text
-  var saved = localStorage.getItem('theme');
-  var current = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-  applyTheme(current);
+  applyTheme(getPreferredTheme());
 
-  // Theme toggle click
   var themeBtn = document.getElementById('theme-toggle');
   if (themeBtn) {
     themeBtn.addEventListener('click', function () {
       var now = document.documentElement.getAttribute('data-theme') || 'light';
       var next = now === 'dark' ? 'light' : 'dark';
-      localStorage.setItem('theme', next);
+      setStorage('theme', next);
       applyTheme(next);
     });
   }
 
-  // Listen for system theme changes
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
-    if (!localStorage.getItem('theme')) {
+    if (!getStorage('theme')) {
       applyTheme(e.matches ? 'dark' : 'light');
     }
   });
