@@ -307,32 +307,8 @@ a:hover {
   background: var(--tag-bg);
   color: var(--tag-text);
   border-bottom: none;
-  cursor: pointer;
-  transition: background 0.2s;
 }
 
-.tag:hover {
-  background: var(--hover-bg);
-  color: var(--text);
-}
-
-.tag.active {
-  background: var(--text);
-  color: var(--bg);
-}
-
-/* Tag filter bar on blog page */
-.tag-filter {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-bottom: 2rem;
-}
-
-.tag-filter .tag {
-  font-size: 0.75rem;
-  padding: 0.2rem 0.6rem;
-}
 
 /* ========================================
    Post List (Blog Archive)

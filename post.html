@@ -153,9 +153,13 @@
             // Tags
             if (tags.length) {
               var tagsEl = document.getElementById('post-tags');
-              tagsEl.innerHTML = tags.map(function (tag) {
-                return '<a href="blog.html?tag=' + encodeURIComponent(tag) + '" class="tag">' + tag + '</a>';
-              }).join('');
+              tagsEl.innerHTML = '';
+              tags.forEach(function (tag) {
+                var span = document.createElement('span');
+                span.className = 'tag';
+                span.textContent = tag;
+                tagsEl.appendChild(span);
+              });
               tagsEl.style.display = '';
             }
 

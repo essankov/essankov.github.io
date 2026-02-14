@@ -47,7 +47,6 @@
         </div>
       </noscript>
 
-      <section id="tag-filter-section" style="display:none"></section>
       <section id="posts-section"></section>
 
       <footer class="footer">
@@ -61,8 +60,12 @@
     (function () {
       var months = ['January', 'February', 'March', 'April', 'May', 'June',
         'July', 'August', 'September', 'October', 'November', 'December'];
-      var shortMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+      function esc(s) {
+        var d = document.createElement('div');
+        d.textContent = s;
+        return d.innerHTML;
+      }
 
       fetch('posts.json')
         .then(function (res) {
@@ -70,40 +73,11 @@
           return res.json();
         })
         .then(function (posts) {
-          function render(activeTag) {
-            var filtered = activeTag
-              ? posts.filter(function (p) { return p.tags && p.tags.indexOf(activeTag) !== -1; })
-              : posts;
-
-            // Collect all tags
-            var allTags = {};
-            posts.forEach(function (p) {
-              if (p.tags) p.tags.forEach(function (t) { allTags[t] = true; });
-            });
-            var tagList = Object.keys(allTags).sort();
-
-            // Render tag filter
-            var filterSection = document.getElementById('tag-filter-section');
-            filterSection.style.display = '';
-            var filterHtml = '<div class="tag-filter">';
-            filterHtml += '<span class="tag' + (!activeTag ? ' active' : '') + '" data-tag="">All</span>';
-            tagList.forEach(function (t) {
-              filterHtml += '<span class="tag' + (activeTag === t ? ' active' : '') + '" data-tag="' + t + '">' + t + '</span>';
-            });
-            filterHtml += '</div>';
-            filterSection.innerHTML = filterHtml;
-
-            // Add click handlers to tags
-            filterSection.querySelectorAll('.tag').forEach(function (el) {
-              el.addEventListener('click', function () {
-                render(el.getAttribute('data-tag') || null);
-              });
-            });
-
+          function render() {
             // Group posts by month
             var groups = {};
             var groupOrder = [];
-            filtered.forEach(function (p) {
+            posts.forEach(function (p) {
               var d = new Date(p.date + 'T00:00:00');
               var key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
               var label = months[d.getMonth()] + ' ' + d.getFullYear();
@@ -123,8 +97,8 @@
               html += '<ul class="post-list">';
               g.posts.forEach(function (p) {
                 html += '<li class="post-item">';
-                html += '<a href="post.html?slug=' + encodeURIComponent(p.slug) + '">' + p.title + '</a>';
-                html += '<span class="post-date">' + p.dateDisplay + '</span>';
+                html += '<a href="post.html?slug=' + encodeURIComponent(p.slug) + '">' + esc(p.title) + '</a>';
+                html += '<span class="post-date">' + esc(p.dateDisplay) + '</span>';
                 html += '</li>';
               });
               html += '</ul></div>';
@@ -137,11 +111,7 @@
             document.getElementById('posts-section').innerHTML = html;
           }
 
-          function init() {
-            var urlParams = new URLSearchParams(window.location.search);
-            var initialTag = urlParams.get('tag') || null;
-            render(initialTag);
-          }
+          function init() { render(); }
 
           if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', init);
