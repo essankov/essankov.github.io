@@ -37,7 +37,7 @@
   <main class="main">
     <div class="content">
 
-      <a href="blog.html" class="back-link">All posts</a>
+      <a href="blog.html" class="back-link" id="back-link">All posts</a>
 
       <header class="post-header">
         <h1 id="post-title"></h1>
@@ -72,27 +72,35 @@
           return res.text();
         })
         .then(function (text) {
-          // Parse front matter
           var title = slug;
           var date = '';
           var body = text;
 
           var match = text.match(/^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/);
           if (match) {
-            var frontMatter = match[1];
+            var fm = match[1];
             body = match[2];
 
-            var titleMatch = frontMatter.match(/^title:\s*(.+)$/m);
-            if (titleMatch) title = titleMatch[1].trim();
+            var t = fm.match(/^title:\s*(.+)$/m);
+            if (t) title = t[1].trim();
 
-            var dateMatch = frontMatter.match(/^date:\s*(.+)$/m);
-            if (dateMatch) date = dateMatch[1].trim();
+            var d = fm.match(/^date:\s*(.+)$/m);
+            if (d) date = d[1].trim();
 
-            var dirMatch = frontMatter.match(/^dir:\s*(.+)$/m);
-            if (dirMatch) document.documentElement.setAttribute('dir', dirMatch[1].trim());
+            var dirVal = fm.match(/^dir:\s*(.+)$/m);
+            var langVal = fm.match(/^lang:\s*(.+)$/m);
 
-            var langMatch = frontMatter.match(/^lang:\s*(.+)$/m);
-            if (langMatch) document.documentElement.setAttribute('lang', langMatch[1].trim());
+            if (dirVal) {
+              document.documentElement.setAttribute('dir', dirVal[1].trim());
+            }
+            if (langVal) {
+              document.documentElement.setAttribute('lang', langVal[1].trim());
+            }
+
+            // Update back link text for Arabic
+            if (langVal && langVal[1].trim() === 'ar') {
+              document.getElementById('back-link').textContent = '\u062C\u0645\u064A\u0639 \u0627\u0644\u0645\u0642\u0627\u0644\u0627\u062A';
+            }
           }
 
           document.getElementById('post-title').textContent = title;
