@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post — Essa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;450;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <button class="mobile-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">&#9776;</button>
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <a href="index.html">Essa</a>
+      <span class="subtitle">Thoughts & Ideas</span>
+    </div>
+    <ul class="sidebar-nav">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="sidebar-bottom">
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span class="icon">&#9790;</span>
+        <span class="label">Dark</span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="main">
+    <div class="content">
+
+      <a href="blog.html" class="back-link">All posts</a>
+
+      <header class="post-header">
+        <h1 id="post-title"></h1>
+        <div class="post-meta" id="post-date"></div>
+      </header>
+
+      <article class="post-content" id="post-content">
+        <p style="color: var(--text-secondary)">Loading...</p>
+      </article>
+
+      <footer class="footer">
+        <p>&copy; 2026 Essa. All rights reserved.</p>
+      </footer>
+
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var params = new URLSearchParams(window.location.search);
+      var slug = params.get('slug');
+
+      if (!slug) {
+        document.getElementById('post-title').textContent = 'Post not found';
+        document.getElementById('post-content').innerHTML = '<p>No post specified.</p>';
+        return;
+      }
+
+      fetch('posts/' + slug + '.md')
+        .then(function (res) {
+          if (!res.ok) throw new Error('Not found');
+          return res.text();
+        })
+        .then(function (text) {
+          // Parse front matter
+          var title = slug;
+          var date = '';
+          var body = text;
+
+          var match = text.match(/^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/);
+          if (match) {
+            var frontMatter = match[1];
+            body = match[2];
+
+            var titleMatch = frontMatter.match(/^title:\s*(.+)$/m);
+            if (titleMatch) title = titleMatch[1].trim();
+
+            var dateMatch = frontMatter.match(/^date:\s*(.+)$/m);
+            if (dateMatch) date = dateMatch[1].trim();
+          }
+
+          document.getElementById('post-title').textContent = title;
+          document.getElementById('post-date').textContent = date;
+          document.title = title + ' — Essa';
+          document.getElementById('post-content').innerHTML = marked.parse(body);
+        })
+        .catch(function () {
+          document.getElementById('post-title').textContent = 'Post not found';
+          document.getElementById('post-content').innerHTML = '<p>The requested post could not be loaded.</p>';
+        });
+    });
+  </script>
+
+</body>
+</html>
