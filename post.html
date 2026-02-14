@@ -87,11 +87,17 @@
 
             var dateMatch = frontMatter.match(/^date:\s*(.+)$/m);
             if (dateMatch) date = dateMatch[1].trim();
+
+            var dirMatch = frontMatter.match(/^dir:\s*(.+)$/m);
+            if (dirMatch) document.documentElement.setAttribute('dir', dirMatch[1].trim());
+
+            var langMatch = frontMatter.match(/^lang:\s*(.+)$/m);
+            if (langMatch) document.documentElement.setAttribute('lang', langMatch[1].trim());
           }
 
           document.getElementById('post-title').textContent = title;
           document.getElementById('post-date').textContent = date;
-          document.title = title + ' — Essa';
+          document.title = title + ' \u2014 Essa';
           document.getElementById('post-content').innerHTML = marked.parse(body);
         })
         .catch(function () {
