@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Essa — Blog</title>
+  <title>Essa</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;450;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
@@ -12,76 +12,24 @@
 </head>
 <body>
 
-  <button class="mobile-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">&#9776;</button>
-  <div class="sidebar-overlay" id="sidebar-overlay"></div>
-
-  <nav class="sidebar" id="sidebar">
-    <div class="sidebar-logo">
-      <a href="index.html">Essa</a>
-      <span class="subtitle">Thoughts & Ideas</span>
-    </div>
-    <ul class="sidebar-nav">
-      <li><a href="index.html" class="active">Home</a></li>
+  <nav class="topnav">
+    <div class="topnav-logo"><a href="index.html">Essa</a></div>
+    <ul class="topnav-links">
       <li><a href="blog.html">Blog</a></li>
       <li><a href="about.html">About</a></li>
+      <li>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+          <span class="icon">&#9790;</span>
+          <span class="label">Dark</span>
+        </button>
+      </li>
     </ul>
-    <div class="sidebar-bottom">
-      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-        <span class="icon">&#9790;</span>
-        <span class="label">Dark</span>
-      </button>
-    </div>
   </nav>
 
   <main class="main">
-    <div class="content">
-
-      <section class="intro">
-        <h1>Hello, World!</h1>
-        <p>Welcome to my corner of the internet. I write about things that catch my attention — technology, ideas, and everything in between. I believe writing is a way to capture wonder and make sense of the world around us.</p>
-      </section>
-
-      <section>
-        <h2 class="section-header">Recent Posts</h2>
-
-        <div class="post-group">
-          <div class="post-group-label">February 2026</div>
-          <ul class="post-list">
-            <li class="post-item">
-              <a href="post.html?slug=power-of-arabic-web">قوة الويب العربي</a>
-              <span class="post-date">Feb 14, 2026</span>
-            </li>
-            <li class="post-item">
-              <a href="post.html?slug=on-building-things">On Building Things</a>
-              <span class="post-date">Feb 14, 2026</span>
-            </li>
-            <li class="post-item">
-              <a href="post.html?slug=the-beauty-of-simplicity">The Beauty of Simplicity</a>
-              <span class="post-date">Feb 10, 2026</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="post-group">
-          <div class="post-group-label">January 2026</div>
-          <ul class="post-list">
-            <li class="post-item">
-              <a href="post.html?slug=starting-fresh">Starting Fresh</a>
-              <span class="post-date">Jan 20, 2026</span>
-            </li>
-            <li class="post-item">
-              <a href="post.html?slug=why-i-write">Why I Write</a>
-              <span class="post-date">Jan 5, 2026</span>
-            </li>
-          </ul>
-        </div>
-
-      </section>
-
-      <footer class="footer">
-        <p>&copy; 2026 Essa. All rights reserved.</p>
-      </footer>
-
+    <div class="hero">
+      <h1>Hello, World!</h1>
+      <p>This is Essa :D</p>
     </div>
   </main>
 

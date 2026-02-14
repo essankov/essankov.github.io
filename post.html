@@ -13,25 +13,18 @@
 </head>
 <body>
 
-  <button class="mobile-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">&#9776;</button>
-  <div class="sidebar-overlay" id="sidebar-overlay"></div>
-
-  <nav class="sidebar" id="sidebar">
-    <div class="sidebar-logo">
-      <a href="index.html">Essa</a>
-      <span class="subtitle">Thoughts & Ideas</span>
-    </div>
-    <ul class="sidebar-nav">
-      <li><a href="index.html">Home</a></li>
+  <nav class="topnav">
+    <div class="topnav-logo"><a href="index.html">Essa</a></div>
+    <ul class="topnav-links">
       <li><a href="blog.html">Blog</a></li>
       <li><a href="about.html">About</a></li>
+      <li>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+          <span class="icon">&#9790;</span>
+          <span class="label">Dark</span>
+        </button>
+      </li>
     </ul>
-    <div class="sidebar-bottom">
-      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-        <span class="icon">&#9790;</span>
-        <span class="label">Dark</span>
-      </button>
-    </div>
   </nav>
 
   <main class="main">
@@ -66,7 +59,6 @@
         return;
       }
 
-      // Sanitize slug: only allow alphanumeric, hyphens, underscores
       slug = slug.replace(/[^a-zA-Z0-9\-_]/g, '');
 
       fetch('posts/' + slug + '.md')
@@ -93,13 +85,8 @@
             var dirVal = fm.match(/^dir:\s*(.+)$/m);
             var langVal = fm.match(/^lang:\s*(.+)$/m);
 
-            // Set dir and lang BEFORE rendering to avoid layout jump
-            if (dirVal) {
-              document.documentElement.setAttribute('dir', dirVal[1].trim());
-            }
-            if (langVal) {
-              document.documentElement.setAttribute('lang', langVal[1].trim());
-            }
+            if (dirVal) document.documentElement.setAttribute('dir', dirVal[1].trim());
+            if (langVal) document.documentElement.setAttribute('lang', langVal[1].trim());
           }
 
           function render() {
@@ -108,7 +95,6 @@
             document.title = title + ' \u2014 Essa';
             document.getElementById('post-content').innerHTML = marked.parse(body);
 
-            // Update back link text for Arabic
             if (document.documentElement.getAttribute('lang') === 'ar') {
               document.getElementById('back-link').textContent = '\u062C\u0645\u064A\u0639 \u0627\u0644\u0645\u0642\u0627\u0644\u0627\u062A';
             }

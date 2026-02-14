@@ -19,9 +19,6 @@
   box-sizing: border-box;
 }
 
-/* ========================================
-   Light Theme (default)
-   ======================================== */
 :root {
   --bg: #fdfdfd;
   --text: #1a1a1a;
@@ -30,22 +27,15 @@
   --link: #1a1a1a;
   --link-hover: #555;
   --border: #e8e8e8;
-  --nav-bg: #f7f7f7;
   --code-bg: rgba(0, 0, 0, 0.05);
   --pre-bg: #f5f5f5;
   --hover-bg: rgba(0, 0, 0, 0.05);
   --post-separator: rgba(0, 0, 0, 0.04);
-  --overlay-bg: rgba(0, 0, 0, 0.3);
-  --sidebar-shadow: rgba(0, 0, 0, 0.08);
-  --sidebar-width: 260px;
   --content-max: 680px;
   --font-body: 'Source Serif 4', 'Jali Arabic', 'Georgia', serif;
   --font-sans: 'Inter', 'Jali Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
-/* ========================================
-   Dark Theme
-   ======================================== */
 [data-theme="dark"] {
   --bg: #111111;
   --text: #e4e4e4;
@@ -54,13 +44,10 @@
   --link: #e4e4e4;
   --link-hover: #b0b0b0;
   --border: #2a2a2a;
-  --nav-bg: #0a0a0a;
   --code-bg: rgba(255, 255, 255, 0.08);
   --pre-bg: #1a1a1a;
   --hover-bg: rgba(255, 255, 255, 0.06);
   --post-separator: rgba(255, 255, 255, 0.04);
-  --overlay-bg: rgba(0, 0, 0, 0.6);
-  --sidebar-shadow: rgba(0, 0, 0, 0.3);
 }
 
 html {
@@ -74,8 +61,9 @@ body {
   background-color: var(--bg);
   color: var(--text);
   line-height: 1.75;
-  display: flex;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 a {
@@ -91,98 +79,58 @@ a:hover {
 }
 
 /* ========================================
-   Sidebar Navigation
+   Top Navigation
    ======================================== */
 
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: var(--sidebar-width);
-  height: 100vh;
-  background: var(--nav-bg);
-  border-right: 1px solid var(--border);
+.topnav {
   display: flex;
-  flex-direction: column;
-  padding: 2.5rem 1.8rem;
-  z-index: 100;
-}
-
-.sidebar-logo {
-  margin-bottom: 2.5rem;
-}
-
-.sidebar-logo a {
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 2.5rem;
+  border-bottom: 1px solid var(--border);
   font-family: var(--font-sans);
-  font-size: 1.3rem;
+}
+
+.topnav-logo a {
+  font-size: 1.15rem;
   font-weight: 700;
   color: var(--accent);
   border-bottom: none;
   letter-spacing: -0.02em;
 }
 
-.sidebar-logo .subtitle {
-  display: block;
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  font-weight: 400;
-  color: var(--text-secondary);
-  margin-top: 0.3rem;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-}
-
-.sidebar-nav {
-  list-style: none;
+.topnav-links {
   display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
+  align-items: center;
+  gap: 1.5rem;
+  list-style: none;
 }
 
-.sidebar-nav a {
-  font-family: var(--font-sans);
-  font-size: 0.92rem;
+.topnav-links a {
+  font-size: 0.88rem;
   font-weight: 450;
   color: var(--text-secondary);
   border-bottom: none;
-  padding: 0.45rem 0.7rem;
-  border-radius: 6px;
-  display: block;
-  transition: background 0.2s, color 0.2s;
 }
 
-.sidebar-nav a:hover,
-.sidebar-nav a.active {
+.topnav-links a:hover,
+.topnav-links a.active {
   color: var(--text);
-  background: var(--hover-bg);
 }
 
-.sidebar-bottom {
-  margin-top: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--border);
-}
-
-/* ========================================
-   Theme Toggle
-   ======================================== */
-
+/* Theme Toggle */
 .theme-toggle {
   background: none;
   border: 1px solid var(--border);
   border-radius: 6px;
-  padding: 0.4rem 0.7rem;
+  padding: 0.3rem 0.55rem;
   cursor: pointer;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-family: var(--font-sans);
   color: var(--text-secondary);
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  width: fit-content;
+  gap: 0.3rem;
 }
 
 .theme-toggle:hover {
@@ -191,39 +139,8 @@ a:hover {
 }
 
 .theme-toggle .icon {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   line-height: 1;
-}
-
-/* ========================================
-   Mobile Menu Toggle
-   ======================================== */
-
-.mobile-toggle {
-  display: none;
-  position: fixed;
-  top: 1.2rem;
-  left: 1.2rem;
-  z-index: 200;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 0.5rem 0.7rem;
-  cursor: pointer;
-  font-size: 1.2rem;
-  line-height: 1;
-  color: var(--text);
-}
-
-.sidebar-overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--overlay-bg);
-  z-index: 90;
 }
 
 /* ========================================
@@ -231,9 +148,8 @@ a:hover {
    ======================================== */
 
 .main {
-  margin-left: var(--sidebar-width);
   flex: 1;
-  padding: 3.5rem 2.5rem 4rem;
+  padding: 3rem 2.5rem 4rem;
   display: flex;
   justify-content: center;
 }
@@ -244,7 +160,34 @@ a:hover {
 }
 
 /* ========================================
-   Homepage Intro
+   Hero / Landing Page
+   ======================================== */
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 70vh;
+}
+
+.hero h1 {
+  font-family: var(--font-sans);
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.8rem;
+}
+
+.hero p {
+  font-family: var(--font-sans);
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+/* ========================================
+   Intro Section (blog/about headers)
    ======================================== */
 
 .intro {
@@ -266,20 +209,6 @@ a:hover {
   color: var(--text-secondary);
   font-size: 1.05rem;
   line-height: 1.8;
-}
-
-/* ========================================
-   Section Headers
-   ======================================== */
-
-.section-header {
-  font-family: var(--font-sans);
-  font-size: 0.78rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-secondary);
-  margin-bottom: 1.5rem;
 }
 
 /* ========================================
@@ -367,9 +296,7 @@ a:hover {
   line-height: 1.85;
 }
 
-.post-content p {
-  margin-bottom: 1.4rem;
-}
+.post-content p { margin-bottom: 1.4rem; }
 
 .post-content h2 {
   font-family: var(--font-sans);
@@ -402,9 +329,7 @@ a:hover {
   padding-left: 1.5rem;
 }
 
-.post-content li {
-  margin-bottom: 0.4rem;
-}
+.post-content li { margin-bottom: 0.4rem; }
 
 .post-content code {
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
@@ -422,16 +347,8 @@ a:hover {
   margin-bottom: 1.4rem;
 }
 
-.post-content pre code {
-  background: none;
-  padding: 0;
-}
-
-.post-content img {
-  max-width: 100%;
-  border-radius: 6px;
-  margin: 1.5rem 0;
-}
+.post-content pre code { background: none; padding: 0; }
+.post-content img { max-width: 100%; border-radius: 6px; margin: 1.5rem 0; }
 
 .post-content hr {
   border: none;
@@ -448,9 +365,7 @@ a:hover {
   line-height: 1.85;
 }
 
-.about-content p {
-  margin-bottom: 1.4rem;
-}
+.about-content p { margin-bottom: 1.4rem; }
 
 /* ========================================
    Back Link
@@ -465,14 +380,8 @@ a:hover {
   border-bottom: none;
 }
 
-.back-link:hover {
-  color: var(--text);
-}
-
-.back-link::before {
-  content: '\2190';
-  margin-right: 0.4rem;
-}
+.back-link:hover { color: var(--text); }
+.back-link::before { content: '\2190'; margin-right: 0.4rem; }
 
 /* ========================================
    Footer
@@ -492,28 +401,20 @@ a:hover {
    ======================================== */
 
 @media (max-width: 768px) {
-  .mobile-toggle {
-    display: block;
+  .topnav {
+    padding: 1rem 1.5rem;
   }
 
-  .sidebar {
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    box-shadow: none;
-  }
-
-  .sidebar.open {
-    transform: translateX(0);
-    box-shadow: 4px 0 20px var(--sidebar-shadow);
-  }
-
-  .sidebar-overlay.open {
-    display: block;
+  .topnav-links {
+    gap: 1rem;
   }
 
   .main {
-    margin-left: 0;
-    padding: 4.5rem 1.5rem 3rem;
+    padding: 2.5rem 1.5rem 3rem;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
   }
 
   .intro h1 {
@@ -539,13 +440,17 @@ a:hover {
     font-size: 16px;
   }
 
+  .topnav {
+    padding: 0.8rem 1.2rem;
+  }
+
   .main {
-    padding: 4rem 1.2rem 2.5rem;
+    padding: 2rem 1.2rem 2.5rem;
   }
 }
 
 /* ========================================
-   RTL Support — must come AFTER base rules
+   RTL Support
    ======================================== */
 
 [dir="rtl"] {
@@ -558,21 +463,12 @@ a:hover {
   text-align: right;
 }
 
-[dir="rtl"] .sidebar {
-  left: auto;
-  right: 0;
-  border-right: none;
-  border-left: 1px solid var(--border);
+[dir="rtl"] .topnav {
+  flex-direction: row-reverse;
 }
 
-[dir="rtl"] .main {
-  margin-left: 0;
-  margin-right: var(--sidebar-width);
-}
-
-[dir="rtl"] .mobile-toggle {
-  left: auto;
-  right: 1.2rem;
+[dir="rtl"] .topnav-links {
+  flex-direction: row-reverse;
 }
 
 [dir="rtl"] .back-link::before {
@@ -599,23 +495,4 @@ a:hover {
 [dir="rtl"] .post-content h3,
 [dir="rtl"] .intro h1 {
   letter-spacing: 0;
-}
-
-[dir="rtl"] .sidebar-logo a {
-  letter-spacing: 0;
-}
-
-@media (max-width: 768px) {
-  [dir="rtl"] .sidebar {
-    transform: translateX(100%);
-  }
-
-  [dir="rtl"] .sidebar.open {
-    transform: translateX(0);
-    box-shadow: -4px 0 20px var(--sidebar-shadow);
-  }
-
-  [dir="rtl"] .main {
-    margin-right: 0;
-  }
 }

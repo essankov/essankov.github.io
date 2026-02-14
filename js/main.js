@@ -42,29 +42,4 @@ document.addEventListener('DOMContentLoaded', function () {
       applyTheme(e.matches ? 'dark' : 'light');
     }
   });
-
-  // Mobile menu
-  var toggle = document.getElementById('mobile-menu-toggle');
-  var sidebar = document.getElementById('sidebar');
-  var overlay = document.getElementById('sidebar-overlay');
-
-  if (toggle && sidebar && overlay) {
-    toggle.addEventListener('click', function () {
-      sidebar.classList.toggle('open');
-      overlay.classList.toggle('open');
-      document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
-    });
-    overlay.addEventListener('click', function () {
-      sidebar.classList.remove('open');
-      overlay.classList.remove('open');
-      document.body.style.overflow = '';
-    });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') {
-        sidebar.classList.remove('open');
-        overlay.classList.remove('open');
-        document.body.style.overflow = '';
-      }
-    });
-  }
 });
