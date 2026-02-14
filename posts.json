@@ -1,17 +1,17 @@
 [
   {
-    "slug": "on-building-things",
-    "title": "On Building Things",
-    "date": "2026-02-14",
-    "dateDisplay": "Feb 14, 2026"
-  },
-  {
     "slug": "power-of-arabic-web",
     "title": "قوة الويب العربي",
     "date": "2026-02-14",
     "dateDisplay": "Feb 14, 2026",
     "dir": "rtl",
     "lang": "ar"
+  },
+  {
+    "slug": "on-building-things",
+    "title": "On Building Things",
+    "date": "2026-02-14",
+    "dateDisplay": "Feb 14, 2026"
   },
   {
     "slug": "note-to-self",
