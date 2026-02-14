@@ -36,7 +36,7 @@
           html += '<ul class="post-list">';
           g.posts.forEach(function (p) {
             html += '<li class="post-item">';
-            html += '<a href="post.html?slug=' + encodeURIComponent(p.slug) + '">' + esc(p.title) + '</a>';
+            html += '<a href="posts/' + encodeURIComponent(p.slug) + '.html">' + esc(p.title) + '</a>';
             html += '<span class="post-date">' + esc(p.dateDisplay) + '</span>';
             html += '</li>';
           });
