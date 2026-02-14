@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'none'">
+  <meta name="referrer" content="no-referrer-when-downgrade">
   <title>Blog — Essa</title>
   <meta name="description" content="All posts by Essa, organized by date. Thoughts on technology, building things, and simplicity.">
   <meta property="og:title" content="Blog — Essa">
@@ -56,81 +58,7 @@
     </div>
   </main>
 
-  <script>
-    (function () {
-      var months = ['January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December'];
-
-      function esc(s) {
-        var d = document.createElement('div');
-        d.textContent = s;
-        return d.innerHTML;
-      }
-
-      fetch('posts.json')
-        .then(function (res) {
-          if (!res.ok) throw new Error('Failed to load posts');
-          return res.json();
-        })
-        .then(function (posts) {
-          function render() {
-            // Group posts by month
-            var groups = {};
-            var groupOrder = [];
-            posts.forEach(function (p) {
-              var d = new Date(p.date + 'T00:00:00');
-              var key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
-              var label = months[d.getMonth()] + ' ' + d.getFullYear();
-              if (!groups[key]) {
-                groups[key] = { label: label, posts: [] };
-                groupOrder.push(key);
-              }
-              groups[key].posts.push(p);
-            });
-
-            // Render
-            var html = '';
-            groupOrder.forEach(function (key) {
-              var g = groups[key];
-              html += '<div class="post-group">';
-              html += '<div class="post-group-label">' + g.label + '</div>';
-              html += '<ul class="post-list">';
-              g.posts.forEach(function (p) {
-                html += '<li class="post-item">';
-                html += '<a href="post.html?slug=' + encodeURIComponent(p.slug) + '">' + esc(p.title) + '</a>';
-                html += '<span class="post-date">' + esc(p.dateDisplay) + '</span>';
-                html += '</li>';
-              });
-              html += '</ul></div>';
-            });
-
-            if (!html) {
-              html = '<p style="color:var(--text-secondary)">No posts found.</p>';
-            }
-
-            document.getElementById('posts-section').innerHTML = html;
-          }
-
-          function init() { render(); }
-
-          if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', init);
-          } else {
-            init();
-          }
-        })
-        .catch(function () {
-          function showError() {
-            document.getElementById('posts-section').innerHTML = '<p>Failed to load posts.</p>';
-          }
-          if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', showError);
-          } else {
-            showError();
-          }
-        });
-    })();
-  </script>
+  <script src="js/blog.js"></script>
 
 </body>
 </html>
