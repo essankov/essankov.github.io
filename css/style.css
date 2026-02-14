@@ -1,7 +1,16 @@
 /* ========================================
    Essa's Blog — Minimal, clean design
-   Inspired by alfarhan.ws
    ======================================== */
+
+/* Jali Arabic Font */
+@font-face { font-family: 'Jali Arabic'; src: url('../fonts/Jali-Arabic-Extralight.woff2') format('woff2'); font-weight: 200; font-display: swap; }
+@font-face { font-family: 'Jali Arabic'; src: url('../fonts/Jali-Arabic-Light.woff2') format('woff2'); font-weight: 300; font-display: swap; }
+@font-face { font-family: 'Jali Arabic'; src: url('../fonts/Jali-Arabic-Regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Jali Arabic'; src: url('../fonts/Jali-Arabic-Medium.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Jali Arabic'; src: url('../fonts/Jali-Arabic-SemiBold.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+@font-face { font-family: 'Jali Arabic'; src: url('../fonts/Jali-Arabic-Bold.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'Jali Arabic'; src: url('../fonts/Jali-Arabic-Extrabold.woff2') format('woff2'); font-weight: 800; font-display: swap; }
+@font-face { font-family: 'Jali Arabic'; src: url('../fonts/Jali-Arabic-Black.woff2') format('woff2'); font-weight: 900; font-display: swap; }
 
 /* Reset & Base */
 *, *::before, *::after {
@@ -10,6 +19,9 @@
   box-sizing: border-box;
 }
 
+/* ========================================
+   Light Theme (default)
+   ======================================== */
 :root {
   --bg: #fdfdfd;
   --text: #1a1a1a;
@@ -19,10 +31,37 @@
   --link-hover: #555;
   --border: #e8e8e8;
   --nav-bg: #f7f7f7;
+  --code-bg: rgba(0, 0, 0, 0.05);
+  --pre-bg: #f5f5f5;
+  --hover-bg: rgba(0, 0, 0, 0.05);
+  --post-separator: rgba(0, 0, 0, 0.04);
+  --overlay-bg: rgba(0, 0, 0, 0.3);
+  --sidebar-shadow: rgba(0, 0, 0, 0.08);
   --sidebar-width: 260px;
   --content-max: 680px;
-  --font-body: 'Source Serif 4', 'Georgia', serif;
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Source Serif 4', 'Jali Arabic', 'Georgia', serif;
+  --font-sans: 'Inter', 'Jali Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-arabic: 'Jali Arabic', 'Inter', sans-serif;
+}
+
+/* ========================================
+   Dark Theme
+   ======================================== */
+[data-theme="dark"] {
+  --bg: #111111;
+  --text: #e4e4e4;
+  --text-secondary: #999999;
+  --accent: #e4e4e4;
+  --link: #e4e4e4;
+  --link-hover: #b0b0b0;
+  --border: #2a2a2a;
+  --nav-bg: #0a0a0a;
+  --code-bg: rgba(255, 255, 255, 0.08);
+  --pre-bg: #1a1a1a;
+  --hover-bg: rgba(255, 255, 255, 0.06);
+  --post-separator: rgba(255, 255, 255, 0.04);
+  --overlay-bg: rgba(0, 0, 0, 0.6);
+  --sidebar-shadow: rgba(0, 0, 0, 0.3);
 }
 
 html {
@@ -38,6 +77,7 @@ body {
   line-height: 1.75;
   display: flex;
   min-height: 100vh;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 a {
@@ -50,6 +90,63 @@ a {
 a:hover {
   color: var(--link-hover);
   border-bottom-color: var(--link-hover);
+}
+
+/* ========================================
+   RTL Support
+   ======================================== */
+[dir="rtl"] body {
+  direction: rtl;
+}
+
+[dir="rtl"] .sidebar {
+  left: auto;
+  right: 0;
+  border-right: none;
+  border-left: 1px solid var(--border);
+}
+
+[dir="rtl"] .main {
+  margin-left: 0;
+  margin-right: var(--sidebar-width);
+}
+
+[dir="rtl"] .mobile-toggle {
+  left: auto;
+  right: 1.2rem;
+}
+
+[dir="rtl"] .back-link::before {
+  content: '→';
+  margin-right: 0;
+  margin-left: 0.4rem;
+}
+
+[dir="rtl"] .post-content ul,
+[dir="rtl"] .post-content ol {
+  padding-left: 0;
+  padding-right: 1.5rem;
+}
+
+[dir="rtl"] .post-content blockquote {
+  border-left: none;
+  border-right: 3px solid var(--border);
+  padding: 0.5rem 1.3rem 0.5rem 0;
+}
+
+@media (max-width: 768px) {
+  [dir="rtl"] .sidebar {
+    transform: translateX(100%);
+  }
+
+  [dir="rtl"] .sidebar.open {
+    transform: translateX(0);
+    box-shadow: -4px 0 20px var(--sidebar-shadow);
+  }
+
+  [dir="rtl"] .main {
+    margin-right: 0;
+  }
 }
 
 /* ========================================
@@ -68,6 +165,7 @@ a:hover {
   flex-direction: column;
   padding: 2.5rem 1.8rem;
   z-index: 100;
+  transition: background-color 0.3s, border-color 0.3s;
 }
 
 .sidebar-logo {
@@ -116,15 +214,21 @@ a:hover {
 .sidebar-nav a:hover,
 .sidebar-nav a.active {
   color: var(--text);
-  background: rgba(0, 0, 0, 0.05);
+  background: var(--hover-bg);
 }
 
-.sidebar-social {
+.sidebar-bottom {
   margin-top: auto;
   display: flex;
+  flex-direction: column;
   gap: 1rem;
   padding-top: 1.5rem;
   border-top: 1px solid var(--border);
+}
+
+.sidebar-social {
+  display: flex;
+  gap: 1rem;
 }
 
 .sidebar-social a {
@@ -136,6 +240,36 @@ a:hover {
 
 .sidebar-social a:hover {
   color: var(--text);
+}
+
+/* ========================================
+   Theme Toggle
+   ======================================== */
+
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.4rem 0.7rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-family: var(--font-sans);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: background 0.2s, color 0.2s, border-color 0.3s;
+  width: fit-content;
+}
+
+.theme-toggle:hover {
+  color: var(--text);
+  background: var(--hover-bg);
+}
+
+.theme-toggle .icon {
+  font-size: 0.9rem;
+  line-height: 1;
 }
 
 /* ========================================
@@ -156,6 +290,7 @@ a:hover {
   font-size: 1.2rem;
   line-height: 1;
   color: var(--text);
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
 }
 
 .sidebar-overlay {
@@ -165,7 +300,7 @@ a:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--overlay-bg);
   z-index: 90;
 }
 
@@ -258,7 +393,7 @@ a:hover {
 }
 
 .post-item + .post-item {
-  border-top: 1px solid rgba(0, 0, 0, 0.04);
+  border-top: 1px solid var(--post-separator);
 }
 
 .post-item a {
@@ -352,13 +487,13 @@ a:hover {
 .post-content code {
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
   font-size: 0.88em;
-  background: rgba(0, 0, 0, 0.05);
+  background: var(--code-bg);
   padding: 0.15em 0.4em;
   border-radius: 3px;
 }
 
 .post-content pre {
-  background: #f5f5f5;
+  background: var(--pre-bg);
   border-radius: 6px;
   padding: 1.2rem;
   overflow-x: auto;
@@ -413,7 +548,7 @@ a:hover {
 }
 
 .back-link::before {
-  content: '←';
+  content: '\2190';
   margin-right: 0.4rem;
 }
 
@@ -447,7 +582,7 @@ a:hover {
 
   .sidebar.open {
     transform: translateX(0);
-    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.08);
+    box-shadow: 4px 0 20px var(--sidebar-shadow);
   }
 
   .sidebar-overlay.open {
