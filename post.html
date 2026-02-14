@@ -44,9 +44,7 @@
         <div class="post-meta" id="post-date"></div>
       </header>
 
-      <article class="post-content" id="post-content">
-        <p style="color: var(--text-secondary)">Loading...</p>
-      </article>
+      <article class="post-content" id="post-content"></article>
 
       <footer class="footer">
         <p>&copy; 2026 Essa. All rights reserved.</p>
@@ -56,15 +54,20 @@
   </main>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    (function () {
       var params = new URLSearchParams(window.location.search);
       var slug = params.get('slug');
 
       if (!slug) {
-        document.getElementById('post-title').textContent = 'Post not found';
-        document.getElementById('post-content').innerHTML = '<p>No post specified.</p>';
+        document.addEventListener('DOMContentLoaded', function () {
+          document.getElementById('post-title').textContent = 'Post not found';
+          document.getElementById('post-content').innerHTML = '<p>No post specified.</p>';
+        });
         return;
       }
+
+      // Sanitize slug: only allow alphanumeric, hyphens, underscores
+      slug = slug.replace(/[^a-zA-Z0-9\-_]/g, '');
 
       fetch('posts/' + slug + '.md')
         .then(function (res) {
@@ -90,29 +93,45 @@
             var dirVal = fm.match(/^dir:\s*(.+)$/m);
             var langVal = fm.match(/^lang:\s*(.+)$/m);
 
+            // Set dir and lang BEFORE rendering to avoid layout jump
             if (dirVal) {
               document.documentElement.setAttribute('dir', dirVal[1].trim());
             }
             if (langVal) {
               document.documentElement.setAttribute('lang', langVal[1].trim());
             }
+          }
+
+          function render() {
+            document.getElementById('post-title').textContent = title;
+            document.getElementById('post-date').textContent = date;
+            document.title = title + ' \u2014 Essa';
+            document.getElementById('post-content').innerHTML = marked.parse(body);
 
             // Update back link text for Arabic
-            if (langVal && langVal[1].trim() === 'ar') {
+            if (document.documentElement.getAttribute('lang') === 'ar') {
               document.getElementById('back-link').textContent = '\u062C\u0645\u064A\u0639 \u0627\u0644\u0645\u0642\u0627\u0644\u0627\u062A';
             }
           }
 
-          document.getElementById('post-title').textContent = title;
-          document.getElementById('post-date').textContent = date;
-          document.title = title + ' \u2014 Essa';
-          document.getElementById('post-content').innerHTML = marked.parse(body);
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', render);
+          } else {
+            render();
+          }
         })
         .catch(function () {
-          document.getElementById('post-title').textContent = 'Post not found';
-          document.getElementById('post-content').innerHTML = '<p>The requested post could not be loaded.</p>';
+          function showError() {
+            document.getElementById('post-title').textContent = 'Post not found';
+            document.getElementById('post-content').innerHTML = '<p>The requested post could not be loaded.</p>';
+          }
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', showError);
+          } else {
+            showError();
+          }
         });
-    });
+    })();
   </script>
 
 </body>

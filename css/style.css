@@ -594,11 +594,14 @@ a:hover {
   padding-right: 1.5rem;
 }
 
-[dir="rtl"] .post-header h1 {
+[dir="rtl"] .post-header h1,
+[dir="rtl"] .post-content h2,
+[dir="rtl"] .post-content h3,
+[dir="rtl"] .intro h1 {
   letter-spacing: 0;
 }
 
-[dir="rtl"] .intro h1 {
+[dir="rtl"] .sidebar-logo a {
   letter-spacing: 0;
 }
 
