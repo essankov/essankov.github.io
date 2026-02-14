@@ -4,9 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blog — Essa</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;450;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+  <meta name="description" content="All posts by Essa, organized by date. Thoughts on technology, building things, and simplicity.">
+  <meta property="og:title" content="Blog — Essa">
+  <meta property="og:description" content="All posts by Essa, organized by date.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://essankov.github.io/blog.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Blog — Essa">
+  <meta name="twitter:description" content="All posts by Essa, organized by date.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="alternate" type="application/rss+xml" title="Essa" href="feed.xml">
   <link rel="stylesheet" href="css/style.css">
   <script src="js/main.js"></script>
 </head>
@@ -34,39 +41,14 @@
         <p>All posts, organized by date.</p>
       </section>
 
-      <section>
-        <div class="post-group">
-          <div class="post-group-label">February 2026</div>
-          <ul class="post-list">
-            <li class="post-item">
-              <a href="post.html?slug=power-of-arabic-web">قوة الويب العربي</a>
-              <span class="post-date">Feb 14, 2026</span>
-            </li>
-            <li class="post-item">
-              <a href="post.html?slug=on-building-things">On Building Things</a>
-              <span class="post-date">Feb 14, 2026</span>
-            </li>
-            <li class="post-item">
-              <a href="post.html?slug=the-beauty-of-simplicity">The Beauty of Simplicity</a>
-              <span class="post-date">Feb 10, 2026</span>
-            </li>
-          </ul>
+      <noscript>
+        <div class="noscript-msg">
+          <p>JavaScript is required to load the post list.</p>
         </div>
+      </noscript>
 
-        <div class="post-group">
-          <div class="post-group-label">January 2026</div>
-          <ul class="post-list">
-            <li class="post-item">
-              <a href="post.html?slug=starting-fresh">Starting Fresh</a>
-              <span class="post-date">Jan 20, 2026</span>
-            </li>
-            <li class="post-item">
-              <a href="post.html?slug=why-i-write">Why I Write</a>
-              <span class="post-date">Jan 5, 2026</span>
-            </li>
-          </ul>
-        </div>
-      </section>
+      <section id="tag-filter-section" style="display:none"></section>
+      <section id="posts-section"></section>
 
       <footer class="footer">
         <p>&copy; 2026 Essa. All rights reserved.</p>
@@ -74,6 +56,111 @@
 
     </div>
   </main>
+
+  <script>
+    (function () {
+      var months = ['January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'];
+      var shortMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+      fetch('posts.json')
+        .then(function (res) {
+          if (!res.ok) throw new Error('Failed to load posts');
+          return res.json();
+        })
+        .then(function (posts) {
+          function render(activeTag) {
+            var filtered = activeTag
+              ? posts.filter(function (p) { return p.tags && p.tags.indexOf(activeTag) !== -1; })
+              : posts;
+
+            // Collect all tags
+            var allTags = {};
+            posts.forEach(function (p) {
+              if (p.tags) p.tags.forEach(function (t) { allTags[t] = true; });
+            });
+            var tagList = Object.keys(allTags).sort();
+
+            // Render tag filter
+            var filterSection = document.getElementById('tag-filter-section');
+            filterSection.style.display = '';
+            var filterHtml = '<div class="tag-filter">';
+            filterHtml += '<span class="tag' + (!activeTag ? ' active' : '') + '" data-tag="">All</span>';
+            tagList.forEach(function (t) {
+              filterHtml += '<span class="tag' + (activeTag === t ? ' active' : '') + '" data-tag="' + t + '">' + t + '</span>';
+            });
+            filterHtml += '</div>';
+            filterSection.innerHTML = filterHtml;
+
+            // Add click handlers to tags
+            filterSection.querySelectorAll('.tag').forEach(function (el) {
+              el.addEventListener('click', function () {
+                render(el.getAttribute('data-tag') || null);
+              });
+            });
+
+            // Group posts by month
+            var groups = {};
+            var groupOrder = [];
+            filtered.forEach(function (p) {
+              var d = new Date(p.date + 'T00:00:00');
+              var key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+              var label = months[d.getMonth()] + ' ' + d.getFullYear();
+              if (!groups[key]) {
+                groups[key] = { label: label, posts: [] };
+                groupOrder.push(key);
+              }
+              groups[key].posts.push(p);
+            });
+
+            // Render
+            var html = '';
+            groupOrder.forEach(function (key) {
+              var g = groups[key];
+              html += '<div class="post-group">';
+              html += '<div class="post-group-label">' + g.label + '</div>';
+              html += '<ul class="post-list">';
+              g.posts.forEach(function (p) {
+                html += '<li class="post-item">';
+                html += '<a href="post.html?slug=' + encodeURIComponent(p.slug) + '">' + p.title + '</a>';
+                html += '<span class="post-date">' + p.dateDisplay + '</span>';
+                html += '</li>';
+              });
+              html += '</ul></div>';
+            });
+
+            if (!html) {
+              html = '<p style="color:var(--text-secondary)">No posts found.</p>';
+            }
+
+            document.getElementById('posts-section').innerHTML = html;
+          }
+
+          function init() {
+            var urlParams = new URLSearchParams(window.location.search);
+            var initialTag = urlParams.get('tag') || null;
+            render(initialTag);
+          }
+
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+          } else {
+            init();
+          }
+        })
+        .catch(function () {
+          function showError() {
+            document.getElementById('posts-section').innerHTML = '<p>Failed to load posts.</p>';
+          }
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', showError);
+          } else {
+            showError();
+          }
+        });
+    })();
+  </script>
 
 </body>
 </html>

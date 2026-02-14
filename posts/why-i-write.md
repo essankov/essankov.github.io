@@ -1,6 +1,7 @@
 ---
 title: Why I Write
 date: January 5, 2026
+tags: writing, reflection
 ---
 
 Writing is thinking made visible. When you write, you're forced to organize your thoughts, to find the thread that connects one idea to the next, to make sense of the noise in your head.
