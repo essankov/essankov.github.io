@@ -1,4 +1,4 @@
-# Simple workflow for deploying static content to GitHub Pages
+# Build and deploy static site to GitHub Pages
 name: Deploy static content to Pages
 
 on:
@@ -24,16 +24,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Generate blog post list and feed.xml
-        run: python3 generate_posts.py
+      - name: Build site
+        run: |
+          pip install markdown
+          python3 build.py
       - name: Minify CSS and JavaScript
         run: |
           pip install csscompressor rjsmin
           python3 -c "
           import pathlib, csscompressor, rjsmin
-          for f in pathlib.Path('css').glob('*.css'):
+          for f in pathlib.Path('dist/css').glob('*.css'):
               f.write_text(csscompressor.compress(f.read_text()))
-          for f in pathlib.Path('js').glob('*.js'):
+          for f in pathlib.Path('dist/js').glob('*.js'):
               f.write_text(rjsmin.jsmin(f.read_text()))
           "
       - name: Setup Pages
@@ -41,7 +43,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: 'dist'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
