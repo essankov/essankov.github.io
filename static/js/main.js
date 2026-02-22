@@ -12,6 +12,9 @@ function getPreferredTheme() {
 
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
+  // Clear inline styles set by the early FOUC-prevention script; CSS variables handle it now
+  document.documentElement.style.background = '';
+  document.documentElement.style.color = '';
   var btn = document.getElementById('theme-toggle');
   if (!btn) return;
   var icon = btn.querySelector('.icon');

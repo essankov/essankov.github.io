@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-W00AGueNGW9XlwGmYdreC0/e46ExtMmdq9NMDXvSE40='; style-src 'self'; font-src 'self'; img-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-r3xMDYVZpNSY0UbhtVksVqd9YQDxvhJgy0WS3YnPe+s='; style-src 'self'; font-src 'self'; img-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>{{title}}</title>
 {{meta_tags}}
   <link rel="icon" href="{{root}}favicon.svg" type="image/svg+xml">
   <link rel="alternate" type="application/rss+xml" title="Essa" href="{{root}}feed.xml">
-  <script>(function(){try{var t=localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t}catch(e){}})()</script>
+  <script>(function(){try{var t=localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;var d=t==="dark";document.documentElement.style.background=d?"#111111":"#fdfdfd";document.documentElement.style.color=d?"#e4e4e4":"#1a1a1a"}catch(e){}})()</script>
   <link rel="preload" href="{{root}}fonts/Inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="{{root}}fonts/SourceSerif4-latin.woff2" as="font" type="font/woff2" crossorigin>
 {{extra_preloads}}
