@@ -5,6 +5,8 @@ import re
 import html
 import shutil
 import math
+import hashlib
+import base64
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -27,6 +29,35 @@ MONTHS = [
 ]
 
 FOOTER = '      <footer class="footer">\n        <p>&copy; 2026 Essa. All rights reserved.</p>\n      </footer>'
+
+VALID_LANG = re.compile(r'^[a-zA-Z]{2,8}(-[a-zA-Z0-9]{1,8})*$')
+VALID_DIRS = {'ltr', 'rtl', 'auto'}
+VALID_SLUG = re.compile(r'^[a-zA-Z0-9][a-zA-Z0-9_-]*$')
+
+
+def sanitize_lang(val):
+    """Validate lang attribute against BCP 47 pattern."""
+    return val if VALID_LANG.match(val) else 'en'
+
+
+def sanitize_dir(val):
+    """Validate dir attribute against allowed values."""
+    return val if val in VALID_DIRS else 'ltr'
+
+
+def sanitize_slug(val):
+    """Validate slug contains only safe filename characters."""
+    return val if VALID_SLUG.match(val) else re.sub(r'[^a-zA-Z0-9_-]', '', val) or 'untitled'
+
+
+def safe_format_date(date_str):
+    """Parse and validate a YYYY-MM-DD date string, return formatted or escaped raw."""
+    try:
+        dt = datetime.strptime(date_str, '%Y-%m-%d')
+        month = dt.strftime('%b')
+        return f'{month} {dt.day}, {dt.year}'
+    except ValueError:
+        return html.escape(date_str)
 
 
 def render(template, variables):
@@ -107,10 +138,8 @@ def reading_time(text, lang='en'):
 
 
 def format_date(date_str):
-    """YYYY-MM-DD -> 'Feb 14, 2026'."""
-    dt = datetime.strptime(date_str, '%Y-%m-%d')
-    month = dt.strftime('%b')
-    return f'{month} {dt.day}, {dt.year}'
+    """YYYY-MM-DD -> 'Feb 14, 2026'. Falls back to escaped raw string."""
+    return safe_format_date(date_str)
 
 
 def copy_static():
@@ -136,12 +165,15 @@ def build_posts(template):
         title = meta.get('title', 'Untitled')
         date = meta.get('date', '2026-01-01')
         desc = meta.get('description', '')
-        slug = meta.get('slug', md_file.stem)
-        lang = meta.get('lang', 'en')
-        direction = meta.get('dir', 'ltr')
+        slug = sanitize_slug(meta.get('slug', md_file.stem))
+        lang = sanitize_lang(meta.get('lang', 'en'))
+        direction = sanitize_dir(meta.get('dir', 'ltr'))
 
-        # Convert markdown to HTML
-        body_html = markdown.markdown(body_md, extensions=[])
+        # Convert markdown to HTML (strip raw HTML tags for safety)
+        body_html = markdown.markdown(
+            body_md, extensions=[], output_format='html'
+        )
+        body_html = re.sub(r'<(?!/?(?:p|h[1-6]|ul|ol|li|a|em|strong|code|pre|blockquote|br|hr|img|del|sup|sub|table|thead|tbody|tr|th|td)\b)[^>]+>', '', body_html)
 
         date_display = format_date(date)
         rt = reading_time(body_md, lang)
@@ -409,8 +441,19 @@ def main():
     copy_static()
     print('  Copied static assets')
 
-    # Load template
+    # Load template and compute CSP hash for inline script
     template = (TEMPLATES / 'base.html').read_text(encoding='utf-8')
+    script_match = re.search(r'<script>(.*?)</script>', template)
+    if script_match:
+        script_content = script_match.group(1)
+        digest = base64.b64encode(
+            hashlib.sha256(script_content.encode()).digest()
+        ).decode()
+        template = re.sub(
+            r"'sha256-[A-Za-z0-9+/=]+'",
+            f"'sha256-{digest}'",
+            template,
+        )
 
     # Build posts
     posts = build_posts(template)
